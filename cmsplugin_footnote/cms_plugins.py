@@ -32,9 +32,12 @@ class FootnotePlugin(TextPlugin):
         context = super(FootnotePlugin, self).render(context, instance,
                                                      placeholder_name)
         request = context['request']
-        page = request.current_page
+        page = request.current_page if request.current_page else instance.page
         footnotes = get_footnotes_for_page(request, page)
-        context['counter'] = footnotes.index(instance) + 1
+        if instance in footnotes:
+            context['counter'] = footnotes.index(instance) + 1
+        else:
+            context['counter'] = 0
         return context
 
 
