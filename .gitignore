@@ -1,2 +1,3 @@
 *.pyc
 *~
+/cmsplugin_footnote.egg-info/
