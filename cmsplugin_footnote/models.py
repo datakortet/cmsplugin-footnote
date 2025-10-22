@@ -5,7 +5,7 @@ try:
 except ImportError:
     from djangocms_text_ckeditor.models import AbstractText
 from django.db.models import CharField
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class Footnote(AbstractText):
