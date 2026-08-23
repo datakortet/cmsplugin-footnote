@@ -25,8 +25,10 @@ setup(
     license='BSD',
     packages=find_packages(),
     install_requires=[
-        'Django >= 1.4',
-        'django-CMS >= 2.3',
+        'Django >= 3.2',
+        # works on both sides of the /srv hop-3 boundary
+        'django-cms >= 3.11, < 4.2',
+        'djangocms-text-ckeditor >= 5',
     ],
     include_package_data=True,
     zip_safe=False,

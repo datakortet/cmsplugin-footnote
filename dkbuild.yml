@@ -1,0 +1,11 @@
+_schema: https://static.datakortet.no/schema/dkbuild.schema.yaml
+
+package:
+  name: cmsplugin_footnote
+  package_name: cmsplugin-footnote
+  description: Footnote plugin for django CMS (vendored fork)
+  version: '0.4.0'
+  created: 2012
+
+build:
+  venv: cmsplugin-footnote

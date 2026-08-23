@@ -1,0 +1,11 @@
+Django==3.2.24                 ; python_version < '3.12'
+Django==4.2.30                 ; python_version >= '3.12'
+django-classy-tags==4.1.0
+django-cms==3.11.11            ; python_version < '3.12'
+django-cms==4.1.11             ; python_version >= '3.12'
+django-sekizai==4.1.0
+django-treebeard==4.7.1        ; python_version < '3.12'
+django-treebeard==4.8.0        ; python_version >= '3.12'
+djangocms-text-ckeditor==5.1.5
+pytest-django==4.8.0           ; python_version < '3.12'
+pytest-django==4.14.0          ; python_version >= '3.12'
