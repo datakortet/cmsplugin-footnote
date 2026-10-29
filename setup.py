@@ -26,8 +26,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         'Django >= 3.2',
-        # works on both sides of the /srv hop-3 boundary
-        'django-cms >= 3.11, < 4.2',
+        # tested on django CMS 4.1 and 5.0 (hop 5); 3.11 is no longer tested
+        'django-cms >= 4.1, < 5.1',
         'djangocms-text-ckeditor >= 5',
     ],
     include_package_data=True,
