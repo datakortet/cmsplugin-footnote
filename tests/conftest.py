@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Two-tier test settings: django CMS 3.x and 4.1 with djangocms-versioning.
+"""Test settings: django CMS 4.1 and 5.0 with djangocms-versioning.
 
 Modeled on cmspagetools/dkstructdoc's conftests (hop 3).
 """
@@ -12,14 +12,10 @@ DIRNAME = os.path.dirname(__file__)
 
 
 def _installed_apps():
-    """The app list, plus djangocms-versioning on django CMS 4.
-
-       # REMOVE AT: hop 4 (django CMS 4.1 only) -- always install versioning.
-    """
+    """The app list. django CMS 4.1+ needs djangocms-versioning."""
     import importlib.util
 
     import cms
-    cms4 = int(cms.__version__.split('.')[0]) >= 4
 
     apps = [
         'django.contrib.auth',
@@ -35,12 +31,11 @@ def _installed_apps():
         'djangocms_text_ckeditor',
         'cmsplugin_footnote',
     ]
-    if cms4:
-        if importlib.util.find_spec('djangocms_versioning') is None:
-            raise RuntimeError(
-                f'django CMS {cms.__version__} requires djangocms-versioning,'
-                ' which is not installed.')
-        apps.append('djangocms_versioning')
+    if importlib.util.find_spec('djangocms_versioning') is None:
+        raise RuntimeError(
+            f'django CMS {cms.__version__} requires djangocms-versioning,'
+            ' which is not installed.')
+    apps.append('djangocms_versioning')
     return apps
 
 
@@ -85,7 +80,7 @@ def pytest_configure():
             },
         }],
         CMS_TEMPLATES=[('footnote-test.html', 'Test template')],
-        # no-op on django CMS 3.x; required by the CMS 4.1 pre_migrate guard
+        # required by the django CMS 4.1+ pre_migrate guard
         CMS_CONFIRM_VERSION4=True,
         STATIC_URL='/static/',
         INSTALLED_APPS=tuple(_installed_apps()),
@@ -102,7 +97,7 @@ def user(db):
 
 @pytest.fixture
 def page(user):
-    """A page with 'nb' content, published on both tiers."""
+    """A page with 'nb' content, published."""
     from cms.api import create_page
     page = create_page('Fotnoter', 'footnote-test.html', 'nb',
                        created_by=user)
@@ -111,23 +106,14 @@ def page(user):
 
 
 def publish(page, language, user):
-    """Publish on either tier. Test support only.
-
-       # REMOVE AT: hop 4 (django CMS 4.1 only) -- keep the versioning arm.
-    """
-    try:
-        from cms.models import PageContent   # django CMS 4.1
-    except ImportError:                      # django CMS 3.x
-        return page.publish(language)
+    """Publish through djangocms-versioning. Test support only."""
+    from cms.models import PageContent
     content = PageContent.admin_manager.filter(
         page=page, language=language).first()
     return content.versions.first().publish(user)
 
 
 def content_placeholder(page, language='nb', slot='content'):
-    """The page's ``slot`` placeholder on either tier. Test support only."""
-    try:
-        placeholders = page.get_placeholders(language, admin_manager=True)
-    except TypeError:                        # django CMS 3.x: no arguments
-        placeholders = page.get_placeholders()
+    """The page's ``slot`` placeholder. Test support only."""
+    placeholders = page.get_placeholders(language, admin_manager=True)
     return placeholders.get(slot=slot)

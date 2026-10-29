@@ -15,21 +15,14 @@ from .settings import CMSPLUGIN_FOOTNOTE_DEBUG
 
 
 def _page_placeholders(page, language):
-    """The page's placeholders, on both django CMS versions.
+    """The page's placeholders in ``language``.
 
-    django CMS 3.x: placeholders hang off the page and are language
-    independent. django CMS 4.1: they belong to the language's PageContent,
-    and ``Page.get_placeholders(language)`` sees published content only
-    (under djangocms-versioning) -- which is what footnote rendering wants:
-    a page with no published content in the language has no footnotes.
-
-    # REMOVE AT: hop 4 (django CMS 4.1 only) -- inline the CMS 4 branch.
+    They belong to the language's PageContent, and
+    ``Page.get_placeholders(language)`` sees published content only (under
+    djangocms-versioning) -- which is what footnote rendering wants: a page
+    with no published content in the language has no footnotes.
     """
-    try:
-        from cms.models import PageContent   # django CMS 4.1
-    except ImportError:                      # django CMS 3.x
-        return page.get_placeholders()
-    from cms.models import Placeholder
+    from cms.models import PageContent, Placeholder
     try:
         return page.get_placeholders(language)
     except PageContent.DoesNotExist:

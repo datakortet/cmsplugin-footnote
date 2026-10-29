@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-"""DB-backed behaviour of the footnote collector on both CMS tiers."""
-import cms
-import pytest
+"""DB-backed behaviour of the footnote collector."""
 from cms.api import add_plugin
 from cms.plugin_pool import plugin_pool
 from django.core.management import call_command
@@ -13,8 +11,6 @@ from cmsplugin_footnote.models import Footnote
 from cmsplugin_footnote.utils import get_footnotes_for_page
 
 from .conftest import content_placeholder, publish
-
-CMS4 = int(cms.__version__.split('.')[0]) >= 4
 
 
 def make_request():
@@ -43,7 +39,7 @@ def test_root_footnotes_in_position_order(page):
 
     footnotes = get_footnotes_for_page(make_request(), page)
 
-    # add_plugin assigns increasing positions on both tiers
+    # add_plugin assigns increasing positions
     assert [f.pk for f in footnotes] == [first.pk, second.pk]
     assert all(isinstance(f, Footnote) for f in footnotes)
 
@@ -73,8 +69,7 @@ def test_other_pages_footnotes_are_not_included(page, user):
     assert get_footnotes_for_page(make_request(), page) == []
 
 
-@pytest.mark.skipif(not CMS4, reason='published-only lookup is CMS 4 only')
-def test_unpublished_page_has_no_footnotes_on_cms4(user):
+def test_unpublished_page_has_no_footnotes(user):
     from cms.api import create_page
     draft = create_page('Utkast', 'footnote-test.html', 'nb',
                         created_by=user)
