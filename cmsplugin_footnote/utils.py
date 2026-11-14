@@ -2,9 +2,11 @@
 
 from django.utils import translation
 
+# djangocms-text on Python 3.13 / Django 5.2 (hop 6), djangocms-text-ckeditor
+# before that. Same names in both.
 try:
-    from cms.plugins.text.models import Text
-    from cms.plugins.text.utils import plugin_tags_to_id_list
+    from djangocms_text.models import Text
+    from djangocms_text.utils import plugin_tags_to_id_list
 except ImportError:
     from djangocms_text_ckeditor.models import Text
     from djangocms_text_ckeditor.utils import plugin_tags_to_id_list

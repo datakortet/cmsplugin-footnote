@@ -45,7 +45,10 @@ def test_root_footnotes_in_position_order(page):
 
 
 def test_footnote_inside_text_plugin(page):
-    from djangocms_text_ckeditor.utils import plugin_to_tag
+    try:
+        from djangocms_text.utils import plugin_to_tag
+    except ImportError:
+        from djangocms_text_ckeditor.utils import plugin_to_tag
 
     ph = content_placeholder(page)
     text = add_plugin(ph, 'TextPlugin', 'nb', body='')

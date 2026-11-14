@@ -1,7 +1,9 @@
 # coding: utf-8
 
+# djangocms-text on Python 3.13 / Django 5.2 (hop 6), djangocms-text-ckeditor
+# before that. Same names in both.
 try:
-    from cms.plugins.text.models import AbstractText
+    from djangocms_text.models import AbstractText
 except ImportError:
     from djangocms_text_ckeditor.models import AbstractText
 from django.db.models import CharField
