@@ -1,8 +1,10 @@
 # coding: utf-8
 
 from cms.plugin_pool import plugin_pool
+# djangocms-text on Python 3.13 / Django 5.2 (hop 6), djangocms-text-ckeditor
+# before that. Same names in both.
 try:
-    from cms.plugins.text.cms_plugins import TextPlugin
+    from djangocms_text.cms_plugins import TextPlugin
 except ImportError:
     from djangocms_text_ckeditor.cms_plugins import TextPlugin
 from django.utils.translation import gettext_lazy as _

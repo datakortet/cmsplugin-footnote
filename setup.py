@@ -28,7 +28,9 @@ setup(
         'Django >= 3.2',
         # tested on django CMS 4.1 and 5.0 (hop 5); 3.11 is no longer tested
         'django-cms >= 4.1, < 5.1',
-        'djangocms-text-ckeditor >= 5',
+        # hop 6: djangocms-text replaces it on Python 3.13 / Django 5.2
+        "djangocms-text-ckeditor >= 5 ; python_version < '3.13'",
+        "djangocms-text >= 1.0 ; python_version >= '3.13'",
     ],
     include_package_data=True,
     zip_safe=False,

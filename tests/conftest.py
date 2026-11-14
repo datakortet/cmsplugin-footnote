@@ -11,6 +11,16 @@ import pytest
 DIRNAME = os.path.dirname(__file__)
 
 
+def text_editor_app():
+    """djangocms_text where it is installed (Python 3.13 / Django 5.2,
+       hop 6), djangocms_text_ckeditor otherwise.
+    """
+    import importlib.util
+    if importlib.util.find_spec('djangocms_text') is not None:
+        return 'djangocms_text'
+    return 'djangocms_text_ckeditor'
+
+
 def _installed_apps():
     """The app list. django CMS 4.1+ needs djangocms-versioning."""
     import importlib.util
@@ -28,7 +38,7 @@ def _installed_apps():
         'menus',
         'sekizai',
         'cms',
-        'djangocms_text_ckeditor',
+        text_editor_app(),
         'cmsplugin_footnote',
     ]
     if importlib.util.find_spec('djangocms_versioning') is None:
