@@ -13,6 +13,7 @@ setup(
     url='https://github.com/BertrandBordage/cmsplugin-footnote',
     description='A simple plugin allowing to add footnotes in django CMS.',
     long_description=open('README.rst').read(),
+    long_description_content_type='text/x-rst',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django',
@@ -23,7 +24,7 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
     ],
     license='BSD',
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests', 'tests.*']),
     install_requires=[
         'Django >= 3.2',
         # tested on django CMS 4.1 and 5.0 (hop 5); 3.11 is no longer tested
