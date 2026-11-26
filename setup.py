@@ -13,6 +13,7 @@ setup(
     url='https://github.com/BertrandBordage/cmsplugin-footnote',
     description='A simple plugin allowing to add footnotes in django CMS.',
     long_description=open('README.rst').read(),
+    long_description_content_type='text/x-rst',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django',
